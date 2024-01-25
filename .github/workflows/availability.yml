@@ -1,0 +1,27 @@
+name: Website Availability Check
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' # Run every 5 minutes
+
+jobs:
+  availability:
+    runs-on: ubuntu-latest
+
+    outputs:
+      website_status: ${{ steps.check_availability.outputs.website_status }}
+
+    steps:
+      - name: Check Website Availability
+        id: check_availability
+        run: |
+          if curl -s --head  --request GET elmouk.com | grep "200 OK" > /dev/null; then
+            echo "Website is accessible"
+            echo "::set-output name=website_status::accessible"
+            exit 0
+          else
+            echo "Website is not accessible"
+            echo "::set-output name=website_status::inaccessible"
+            exit 1
+          fi
+    

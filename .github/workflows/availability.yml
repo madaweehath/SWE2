@@ -15,7 +15,7 @@ jobs:
       - name: Check Website Availability
         id: check_availability
         run: |
-          if curl -s --head  --request GET elmouk.com | grep "200 OK" > /dev/null; then
+          if curl -s --head  --request GET https://elmouk.com/ | grep "200 OK" > /dev/null; then
             echo "Website is accessible"
             echo "::set-output name=website_status::accessible"
             exit 0
